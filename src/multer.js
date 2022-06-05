@@ -32,7 +32,7 @@ const ROOT_DIR = "uploads";
 
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
-    const folder = new Date().getFullYear() + "-" + new Date().getMonth();
+    const folder = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
     const saveIn = path.join(ROOT_DIR, folder);
 
     // If folder not exist create one - this method does not throw error
@@ -45,7 +45,7 @@ const storage = multer.diskStorage({
     cb(null, saveIn);
   },
   filename: async (req, file, cb) => {
-    const folder = new Date().getFullYear() + "-" + new Date().getMonth();
+    const folder = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
 
     // Clean up name from unwanted characters
     const fileInfo = path.parse(file.originalname);
