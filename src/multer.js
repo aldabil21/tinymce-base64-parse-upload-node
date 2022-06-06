@@ -32,8 +32,10 @@ const ROOT_DIR = "uploads";
 
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
-    const folder = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
-    const saveIn = path.join(ROOT_DIR, folder);
+    // TODO: double check userId - maybe yoube a specific Bearer Token
+    const userId = req.params?.userId;
+    const surveyId = req.params?.surveyId;
+    const saveIn = path.join(ROOT_DIR, userId, surveyId);
 
     // If folder not exist create one - this method does not throw error
     const exists = await checkFileExists(saveIn);
@@ -45,7 +47,9 @@ const storage = multer.diskStorage({
     cb(null, saveIn);
   },
   filename: async (req, file, cb) => {
-    const folder = new Date().getFullYear() + "-" + (new Date().getMonth() + 1);
+    // TODO: double check userId - maybe yoube a specific Bearer Token
+    const userId = req.params?.userId;
+    const surveyId = req.params?.surveyId;
 
     // Clean up name from unwanted characters
     const fileInfo = path.parse(file.originalname);
@@ -56,7 +60,7 @@ const storage = multer.diskStorage({
     const fileWithExt = name + extention;
 
     // Final folder + filename
-    const saveIn = path.join(ROOT_DIR, folder, fileWithExt);
+    const saveIn = path.join(ROOT_DIR, userId, surveyId, fileWithExt);
 
     // Check if exists - this method does not throw error
     const exists = await checkFileExists(saveIn);

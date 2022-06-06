@@ -45,9 +45,13 @@ class TinyImgParser {
 
       // 3. Upload
       if (form.has("images")) {
-        const res = await axios.post("/upload", form, {
-          onUploadProgress: this.updateProgress,
-        });
+        const res = await axios.post(
+          "/survey/upload-images/userId/surveyId",
+          form,
+          {
+            onUploadProgress: this.updateProgress,
+          }
+        );
 
         // Replace indexed src with image paths
         if (res.data.length > 0) {
@@ -70,10 +74,11 @@ class TinyImgParser {
 
         // Set textarea new output
         TinyImgParser.resetTextareaExample(this.output);
-        this.toggleBackdrop(false);
       }
     } catch (error) {
       alert(error?.response?.data?.message || error?.message || "ERROR");
+    } finally {
+      this.toggleBackdrop(false);
     }
   }
 
@@ -111,7 +116,7 @@ class TinyImgParser {
     const totalSizeInMB = total / 1000000;
     const loadedSizeInMB = loaded / 1000000;
     const uploadPercentage = (loadedSizeInMB / totalSizeInMB) * 100;
-
+    console.log(uploadPercentage);
     // Update UI
     document.querySelector("progress").value = uploadPercentage;
     document

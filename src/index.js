@@ -20,14 +20,18 @@ app.set("views", path.join(path.resolve(), "src", "views"));
 app.set("view engine", "html");
 
 // Upload Route
-app.post("/upload", multer.array("images"), (req, res) => {
-  const savedFiles = req.files;
+app.post(
+  "/survey/upload-images/:userId/:surveyId",
+  multer.array("images"),
+  (req, res) => {
+    const savedFiles = req.files;
 
-  // Return path array to be appended in the TinyMCE original output
-  // TODO: Should return an absolute path?
+    // Return path array to be appended in the TinyMCE original output
+    // TODO: Should return an absolute path?
 
-  res.json(savedFiles.map((file) => file.path));
-});
+    res.json(savedFiles.map((file) => file.path));
+  }
+);
 
 // Catch all route = home
 app.get("*", async (req, res) => {
