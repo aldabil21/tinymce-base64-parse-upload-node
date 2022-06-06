@@ -116,7 +116,7 @@ class TinyImgParser {
     const totalSizeInMB = total / 1000000;
     const loadedSizeInMB = loaded / 1000000;
     const uploadPercentage = (loadedSizeInMB / totalSizeInMB) * 100;
-    console.log(uploadPercentage);
+
     // Update UI
     document.querySelector("progress").value = uploadPercentage;
     document
